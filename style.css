@@ -1,0 +1,182 @@
+@import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root{
+    --primary: #007bff;
+    --dark-color: #373737
+}
+body{
+    font-family: 'Jost', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    color: #2c3e50;
+}
+img{
+    max-width: 100%;
+}
+a{
+    color: var(--primary);
+    text-decoration: none;
+}
+a:hover{
+    color: var(--dark);
+    text-decoration: none;
+}
+.text-primary{
+    color: var(--primary); !important;
+}
+.text-dark{
+    color: var(--dark);
+}
+
+.main-header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 99;
+    background-color: transparent;
+    transition: .5s background;
+}
+.main-header .navbar{
+    padding: 15px 0;
+}
+.main-header .navbar-nav > li{
+    padding: 0 10px;
+}
+.main-header .navbar-nav > li > .nav-link{
+    padding: 0 5px;
+    line-height: 35px;
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--primary);
+    letter-spacing: 3px;
+    position: relative;
+}
+.main-header .navbar-nav > li > .nav-link:after{
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: auto;
+    width: 0;
+    height: 5px;
+    background-color: var(--dark-color);
+    transition: ease all 0.3s;
+}
+.main-header .navbar-nav > li > .nav-link:hover{
+    color: var(--dark-color);
+}
+.main-header .navbar-nav > li > .nav-link:hover:after{
+    left: 0;
+    right: auto;
+    width: 100%;
+}
+@media (max-width: 991px) {
+    .main-header .navbar-collapse{
+        border-bottom: 2px solid var(--primary);
+        border-top: 2px solid var(--dark-color);
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: #ccc;
+    }
+    .main-header .navbar-nav > li + li{
+        border-top: 1px solid var(--primary);
+    }
+    .main-header .navbar-nav > li > .nav-link{
+        line-height: 50px;
+    }
+    .main-header .navbar-nav > li > .nav-link:after{
+        display: none;
+    }
+    .main-header .navbar-toggler{
+        display: flex;
+        flex-direction: column;
+        border: none;
+        padding: 4px 9px;
+        outline: none;
+        box-shadow: none;
+    }
+    .main-header .navbar-toggler span{
+        width: 25px;
+        height: 2px;
+        background-color: var(--dark-color);
+        margin: 4px 0;
+        transition: .3s;
+
+    }
+    .main-header .navbar-toggler:not(.collapsed) span:nth-child(1){
+        transform: translateY(10px) rotate(45deg);
+    }
+    .main-header .navbar-toggler:not(.collapsed) span:nth-child(2){
+     opacity: 0;
+    }
+    .main-header .navbar-toggler:not(.collapsed) span:nth-child(3){
+        transform: translateY(-10px) rotate(-45deg);
+    }
+}
+
+.colored-btn{
+    padding: 10px 20px;
+    border: 2px solid var(--primary);
+    font-size: 16px;
+    line-height: 1.5;
+    text-decoration: none;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: ease all 0.3s;
+    display: inline-block;
+    background-color: var(--primary);
+    color: white;
+    box-shadow: 5px 4px 0 -1px var(--dark-color);
+}
+.colored-btn:hover{
+    color: var(--primary);
+    background-color: var(--dark-color);
+    border-color: var(--dark-color);
+    box-shadow: 5px 4px 0 -1px var(--primary);
+}
+
+.bg-gray{
+    background-color: gray;
+}
+.bd-dark{
+    background-color: var(--dark-color); !important;
+}
+main{
+    position: relative;
+    z-index: 1;
+}
+.home-section{
+    position: relative;
+    overflow: hidden;
+    padding-top: 150px;
+    padding-bottom: 100px;
+}
+
+@media(max-width: 767px){
+    .home-section{
+        padding-bottom: 100px;
+    }
+}
+.home-section .container{
+    position: relative;
+    z-index: 1;
+}
+.home-section .home-intro h6{
+    font-weight: 600;
+    color: white;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-size: 16px;
+    margin: 0 0 30px;
+}
+@media(max-width: 767px){
+    .home-section .home-intro h6{
+        margin: 0 0 20px;
+
+    }
+}
