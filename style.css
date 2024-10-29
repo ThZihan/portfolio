@@ -14,7 +14,7 @@ img{
     max-width: 100%;
 }
 p{
-    font-size: 18px;
+    font-size: 16px;
 }
 a{
     color: var(--primary);
@@ -217,3 +217,46 @@ ul li {
     color: var(--primary);
     text-decoration: underline;
 }
+#achievementsCarousel .carousel-item {
+    transition: transform 0.5s ease;
+}
+
+#achievementsCarousel .carousel-item .card {
+    opacity: 0.7;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+#achievementsCarousel .carousel-item .active-card {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.footer-section {
+    background-color: #373737;
+    color: #ccc;
+}
+
+.footer-section h5 {
+    font-size: 1.2rem;
+    color: #ffffff;
+}
+
+.footer-section a {
+    color: #ccc;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-section a:hover {
+    color: #007bff;
+}
+
+.social-links a {
+    font-size: 1.2rem;
+}
+
+.footer-section p,
+.footer-section li {
+    font-size: 0.9rem;
+}
+
