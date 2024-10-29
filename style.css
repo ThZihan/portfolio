@@ -18,14 +18,14 @@ a{
     text-decoration: none;
 }
 a:hover{
-    color: var(--dark);
+    color: var(--dark-color);
     text-decoration: none;
 }
 .text-primary{
     color: var(--primary); !important;
 }
 .text-dark{
-    color: var(--dark);
+    color: var(--dark-color);
 }
 
 .main-header{
@@ -179,4 +179,36 @@ main{
         margin: 0 0 20px;
 
     }
+}
+
+
+.section-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 1.5rem;
+}
+
+.about-section, .achievements-section, .publications-section, .contact-section {
+    padding: 60px 0;
+    color: #333;
+}
+
+.bg-light {
+    background-color: #f9f9f9;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li {
+    font-size: 1.1rem;
+    margin: 0.5rem 0;
+}
+
+.contact-section a {
+    color: var(--primary);
+    text-decoration: underline;
 }
