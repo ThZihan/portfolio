@@ -13,6 +13,9 @@ body{
 img{
     max-width: 100%;
 }
+p{
+    font-size: 18px;
+}
 a{
     color: var(--primary);
     text-decoration: none;
@@ -180,7 +183,9 @@ main{
 
     }
 }
-
+#about p{
+    text-align: center;
+}
 
 .section-title {
     font-size: 2rem;
