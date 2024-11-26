@@ -87,8 +87,12 @@ body {
     border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
     box-shadow: 0 0 30px rgba(74, 144, 226, 0.3);
     transition: var(--transition);
+    margin-top: 10px;
 }
-
+.home-image img:hover {
+    width: 90%;
+    transform: scale(1.1);
+}
 /* Cards */
 .card {
     background: var(--card-bg);
