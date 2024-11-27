@@ -121,6 +121,7 @@ body {
 
 .card-text {
     color: var(--text-secondary);
+    text-align: justify;
 }
 
 .card-text strong {
