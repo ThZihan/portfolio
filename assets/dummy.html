@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>IoT Weather Station Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Plotly.js -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+    <style>
+        :root {
+            --primary-color: #1e88e5;
+            --secondary-color: #1565c0;
+            --accent-color: #42a5f5;
+            --warning-color: #ffb300;
+            --danger-color: #e53935;
+            --good-aqi-color: #4caf50;
+            --moderate-aqi-color: #ffeb3b;
+            --unhealthy-aqi-color: #ff9800;
+            --very-unhealthy-aqi-color: #f44336;
+            --hazardous-aqi-color: #9c27b0;
+        }
+
+        body {
+            background-color: #f0f4f8;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .dashboard-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .parameter-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .parameter-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .parameter-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .parameter-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin: 0.5rem 0;
+        }
+
+        .chart-container {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        .lastCards{
+            height:220px;
+        }
+        .derived-data-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .aqi-good { background: var(--good-aqi-color); color: white; }
+        .aqi-moderate { background: var(--moderate-aqi-color); color: black; }
+        .aqi-unhealthy { background: var(--unhealthy-aqi-color); color: white; }
+        .aqi-very-unhealthy { background: var(--very-unhealthy-aqi-color); color: white; }
+        .aqi-hazardous { background: var(--hazardous-aqi-color); color: white; }
+
+        .aqi-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-top: 1rem;
+        }
+
+        .weather-status-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+
+        footer {
+            background-color: rgba(30, 136, 229, 0.05);
+            padding: 2rem 0;
+            font-size: 0.9rem;
+            color: #2c3e50;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        footer a {
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        footer h5 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        footer hr {
+            border-color: rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="dashboard-header">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <h1><i class="fas fa-cloud-sun-rain me-3"></i>IoT Weather Station Dashboard</h1>
+                <p class="mb-0">Real-time monitoring and visualization of weather parameters</p>
+            </div>
+            <div class="col-md-4 text-end">
+                <img src="https://cdn-icons-png.flaticon.com/512/1163/1163661.png" style="width: 60px" alt="Weather monitoring" class="img-fluid rounded-circle">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div class="container">
+    <!-- Weather Parameter Cards -->
+    <div class="row">
+        <!-- Temperature -->
+        <div class="col-md-4">
+            <div class="parameter-card">
+                <i class="fas fa-temperature-high parameter-icon text-danger"></i>
+                <h3>Temperature</h3>
+                <div class="parameter-value" id="temperature-value">--°C</div>
+            </div>
+        </div>
+        <!-- Humidity -->
+        <div class="col-md-4">
+            <div class="parameter-card">
+                <i class="fas fa-tint parameter-icon text-primary"></i>
+                <h3>Humidity</h3>
+                <div class="parameter-value" id="humidity-value">--%</div>
+            </div>
+        </div>
+        <!-- Air Pressure -->
+        <div class="col-md-4">
+            <div class="parameter-card">
+                <i class="fas fa-wind parameter-icon text-info"></i>
+                <h3>Air Pressure</h3>
+                <div class="parameter-value" id="pressure-value">-- hPa</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Dust Particles -->
+        <div class="col-md-4">
+            <div class="parameter-card">
+                <i class="fas fa-smog parameter-icon text-warning"></i>
+                <h3>Dust Particles (PM2.5)</h3>
+                <div class="parameter-value" id="dust-value">-- &micro;g/m&sup3;</div>
+            </div>
+        </div>
+        <!-- Light Percentage -->
+        <div class="col-md-4">
+            <div class="parameter-card">
+                <i class="fas fa-sun parameter-icon text-secondary"></i>
+                <h3>Light</h3>
+                <div class="parameter-value" id="light-value">--%</div>
+            </div>
+        </div>
+        <!-- Wind Speed -->
+        <div class="col-md-4">
+            <div class="parameter-card">
+                <i class="fas fa-wind parameter-icon text-success"></i>
+                <h3>Wind Speed</h3>
+                <div class="parameter-value" id="wind-speed-value">-- m/s</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AQI Card -->
+    <div class="row">
+        <div class="col-md-6">
+            <div class="parameter-card lastCards">
+                <i class="fas fa-poll parameter-icon text-danger"></i>
+                <h3>Air Quality Index (AQI)</h3>
+                <div class="aqi-value" id="aqi-value">--</div>
+                <div id="aqi-category" class="mt-2"></div>
+            </div>
+        </div>
+
+        <!-- Weather Status Card -->
+        <div class="col-md-6">
+            <div class="parameter-card lastCards">
+                <i class="fas fa-sun parameter-icon text-danger"></i>
+                <h3>Heat Index</h3>
+                <div class="aqi-value" id="heat-index">-- °C</div>
+            </div>
+        </div>
+    </div>
+   <!-- AQI replaces Dew Point -->
+        <!-- Removed Dew Point Card -->
+    </div>
+
+    <!-- Graphical Analysis -->
+    <h2 class="text-center mb-4">Graphical Analysis</h2>
+    <div class="row">
+        <!-- Temperature Chart -->
+        <div class="col-md-6">
+            <div class="chart-container">
+                <div id="temperatureChart"></div>
+            </div>
+        </div>
+        <!-- Humidity Chart -->
+        <div class="col-md-6">
+            <div class="chart-container">
+                <div id="humidityChart"></div>
+            </div>
+        </div>
+        <!-- Air Pressure Chart -->
+        <div class="col-md-6">
+            <div class="chart-container">
+                <div id="pressureChart"></div>
+            </div>
+        </div>
+        <!-- Dust Particles Chart -->
+        <div class="col-md-6">
+            <div class="chart-container">
+                <div id="dustChart"></div>
+            </div>
+        </div>
+        <!-- Light Percentage Chart -->
+        <div class="col-md-6">
+            <div class="chart-container">
+                <div id="lightChart"></div>
+            </div>
+        </div>
+        <!-- Wind Speed Chart -->
+        <div class="col-md-6">
+            <div class="chart-container">
+                <div id="windSpeedChart"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="mt-5">
+    <div class="container">
+        <div class="row">
+            <!-- About Section -->
+            <div class="col-md-4">
+                <h5 class="text-primary">About</h5>
+                <p>
+                    The IoT Weather Station Dashboard provides real-time insights into key weather parameters, enabling better decision-making for health, safety, and environmental monitoring.
+                </p>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="col-md-4">
+                <h5 class="text-primary">Quick Links</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#temperatureChart" class="text-dark">Temperature Trends</a></li>
+                    <li><a href="#humidityChart" class="text-dark">Humidity Trends</a></li>
+                    <li><a href="#pressureChart" class="text-dark">Air Pressure Trends</a></li>
+                    <li><a href="#dustChart" class="text-dark">Dust Particles Trends</a></li>
+                    <li><a href="#lightChart" class="text-dark">Light Trends</a></li>
+                    <li><a href="#windSpeedChart" class="text-dark">Wind Speed Trends</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="col-md-4">
+                <h5 class="text-primary">Contact</h5>
+                <p>
+                    <i class="fas fa-envelope me-2"></i>support@weatherstation.com
+                </p>
+                <p>
+                    <i class="fas fa-phone me-2"></i>+1-800-123-4567
+                </p>
+                <p>
+                    <i class="fas fa-map-marker-alt me-2"></i>123 Weather St., Climate City, Earth
+                </p>
+            </div>
+        </div>
+
+        <hr class="my-4">
+
+        <!-- Bottom Footer -->
+        <div class="text-center">
+            <p class="mb-0">
+                &copy; 2024 IoT Weather Station Dashboard. All rights reserved. |
+                <a href="/privacy-policy" class="text-primary">Privacy Policy</a> |
+                <a href="/terms-of-service" class="text-primary">Terms of Service</a>
+            </p>
+        </div>
+    </div>
+</footer>
+
+<!-- JavaScript Section -->
+<script>
+    // Derived Data Calculations
+    function calculateHeatIndex(temperature, humidity) {
+        // Using the simplified formula for Heat Index
+        // Reference: https://en.wikipedia.org/wiki/Heat_index#Simplified_equation
+        const T = temperature;
+        const R = humidity;
+        const HI = 0.5 * (T + 61.0 + ((T-68.0)*1.2) + (R*0.094));
+        return Math.round(HI * 10) / 10;
+    }
+
+    function calculateAQI(pm25) {
+        // Approximate AQI calculation based on PM2.5
+        // Reference: US EPA standard
+        let aqi = 0;
+        if (pm25 <= 12) {
+            aqi = (50/12) * pm25;
+        } else if (pm25 <= 35.4) {
+            aqi = ((100-51)/(35.4-12.1)) * (pm25 - 12.1) + 51;
+        } else if (pm25 <= 55.4) {
+            aqi = ((150-101)/(55.4-35.5)) * (pm25 - 35.5) + 101;
+        } else if (pm25 <= 150.4) {
+            aqi = ((200-151)/(150.4-55.5)) * (pm25 - 55.5) + 151;
+        } else if (pm25 <= 250.4) {
+            aqi = ((300-201)/(250.4-150.5)) * (pm25 - 150.5) + 201;
+        } else if (pm25 <= 350.4) {
+            aqi = ((400-301)/(350.4-250.5)) * (pm25 - 250.5) + 301;
+        } else if (pm25 <= 500.4) {
+            aqi = ((500-401)/(500.4-350.5)) * (pm25 - 350.5) + 401;
+        } else {
+            aqi = 500; // Maximum AQI value
+        }
+        return Math.round(aqi);
+    }
+
+    function getAQICategory(aqi) {
+        if (aqi <= 50) {
+            return { category: 'Good', class: 'aqi-good' };
+        } else if (aqi <= 100) {
+            return { category: 'Moderate', class: 'aqi-moderate' };
+        } else if (aqi <= 150) {
+            return { category: 'Unhealthy for Sensitive Groups', class: 'aqi-unhealthy' };
+        } else if (aqi <= 200) {
+            return { category: 'Unhealthy', class: 'aqi-unhealthy' };
+        } else if (aqi <= 300) {
+            return { category: 'Very Unhealthy', class: 'aqi-very-unhealthy' };
+        } else {
+            return { category: 'Hazardous', class: 'aqi-hazardous' };
+        }
+    }
+
+    function getLocationAndWeather() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                async (position) => {
+                    const lat = position.coords.latitude;  // Get latitude
+                    const lon = position.coords.longitude; // Get longitude
+
+                    // Call the weather API
+                    const apiKey = '23455f714f161e2988ee817bb10cf705'; // Replace with your API key
+                    try {
+                        const response = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,alerts&units=metric&appid=${apiKey}`);
+                        const data = await response.json();
+
+                        // Extract rain probability and weather status
+                        const rainProbability = data.hourly[0].pop; // Probability of precipitation for the current hour
+                        const weatherDescription = data.current.weather[0].description; // Current weather description
+
+                        $('#rain-probability').text(`Rain Probability: ${Math.round(rainProbability * 100)}%`);
+                        $('#weather-status').text(`Weather Status: ${weatherDescription.charAt(0).toUpperCase() + weatherDescription.slice(1)}`);
+                    } catch (error) {
+                        console.error("Error fetching weather data: ", error);
+                        $('#rain-probability').text(`Rain Probability: --%`);
+                        $('#weather-status').text(`Weather Status: Unable to fetch data`);
+                    }
+                },
+                (error) => {
+                    console.error("Error getting location: ", error.message);
+                    $('#rain-probability').text(`Rain Probability: --%`);
+                    $('#weather-status').text(`Weather Status: Unable to get location`);
+                }
+            );
+        } else {
+            console.error("Geolocation is not supported by this browser.");
+            $('#rain-probability').text(`Rain Probability: --%`);
+            $('#weather-status').text(`Weather Status: Geolocation not supported`);
+        }
+    }
+
+    // Fetch Data from ThingSpeak
+    async function fetchData() {
+        // Replace CHANNEL_ID and API_KEY with your ThingSpeak channel details
+        const CHANNEL_ID = '2721786';
+        const API_KEY = 'V74BRF9KBN1I8CL5';
+        const response = await fetch(`https://api.thingspeak.com/channels/${CHANNEL_ID}/feeds.json?results=60&api_key=${API_KEY}`);
+        const data = await response.json();
+        return data;
+    }
+
+    // Update Parameter Values
+    function displayLatestData(latest) {
+        // Parse values
+        const temperature = parseFloat(latest.field1) || 0;
+        const humidity = parseFloat(latest.field2) || 0;
+        const pressure = parseFloat(latest.field3) || 0;
+        const dust = parseFloat(latest.field4) || 0;
+        const light = parseFloat(latest.field5) || 0;
+        const windSpeed = parseFloat(latest.field6) || 0;
+
+        // Update display values
+        $('#temperature-value').text(`${temperature}°C`);
+        $('#humidity-value').text(`${humidity}%`);
+        $('#pressure-value').text(`${pressure} hPa`);
+        $('#dust-value').text(`${dust} \u00B5g/m\u00B3`);
+        $('#light-value').text(`${light}%`);
+        $('#wind-speed-value').text(`${windSpeed} m/s`);
+
+        // Calculate and display derived data
+        const heatIndex = calculateHeatIndex(temperature, humidity);
+        $('#heat-index').text(`${heatIndex} °C`);
+
+        // Calculate and display AQI
+        const aqi = calculateAQI(dust);
+        $('#aqi-value').text(`${aqi}`);
+        const aqiCategory = getAQICategory(aqi);
+        $('#aqi-category').html(`<span class="${aqiCategory.class} p-2 rounded">${aqiCategory.category}</span>`);
+    }
+
+    // Plot Charts
+    function plotChart(fieldData, title, chartDiv, yAxisLabel) {
+        const timestamps = fieldData.map(feed => new Date(feed.created_at));
+        const values = fieldData.map(feed => parseFloat(feed.value));
+
+        const trace = {
+            x: timestamps,
+            y: values,
+            type: 'scatter',
+            mode: 'lines+markers',
+            line: { color: '#1e88e5' },
+            marker: { size: 6 }
+        };
+
+        const layout = {
+            title: {
+                text: title,
+                font: { size: 18, color: '#1e88e5' }
+            },
+            xaxis: {
+                title: 'Timestamp',
+                tickangle: -45,
+                gridcolor: '#f0f0f0'
+            },
+            yaxis: {
+                title: yAxisLabel,
+                gridcolor: '#f0f0f0'
+            },
+            margin: { t: 50, l: 60, r: 30, b: 80 },
+            plot_bgcolor: '#ffffff',
+            paper_bgcolor: '#ffffff',
+        };
+
+        Plotly.newPlot(chartDiv, [trace], layout, { responsive: true });
+    }
+
+    // Initialize Dashboard
+    async function init() {
+        const data = await fetchData();
+        if (!data.feeds || data.feeds.length === 0) {
+            console.error('No data available');
+            return;
+        }
+        const latest = data.feeds[data.feeds.length - 1];
+        displayLatestData(latest);
+
+        const recentData = data.feeds.slice(-20); // Last 20 entries
+
+        // Plot charts for each parameter
+        plotChart(
+            recentData.map(f => ({ created_at: f.created_at, value: f.field1 })),
+            'Temperature Trends',
+            'temperatureChart',
+            'Temperature (°C)'
+        );
+
+        plotChart(
+            recentData.map(f => ({ created_at: f.created_at, value: f.field2 })),
+            'Humidity Trends',
+            'humidityChart',
+            'Humidity (%)'
+        );
+
+        plotChart(
+            recentData.map(f => ({ created_at: f.created_at, value: f.field3 })),
+            'Air Pressure Trends',
+            'pressureChart',
+            'Air Pressure (hPa)'
+        );
+
+        plotChart(
+            recentData.map(f => ({ created_at: f.created_at, value: f.field4 })),
+            'Dust Particles (PM2.5) Trends',
+            'dustChart',
+            'Dust Particles (\u00B5g/m\u00B3)'
+        );
+
+        plotChart(
+            recentData.map(f => ({ created_at: f.created_at, value: f.field5 })),
+            'Light Trends',
+            'lightChart',
+            'Light (%)'
+        );
+
+        plotChart(
+            recentData.map(f => ({ created_at: f.created_at, value: f.field6 })),
+            'Wind Speed Trends',
+            'windSpeedChart',
+            'Wind Speed (m/s)'
+        );
+
+    }
+
+    // Initialize and set interval for data refresh
+    $(document).ready(function() {
+        init();
+        setInterval(init, 15000); // Refresh data every 15 seconds
+    });
+</script>
+</body>
+</html>
