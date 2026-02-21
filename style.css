@@ -99,14 +99,13 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
     transition: var(--transition);
-    height: 450px;
+    border-radius: 12px;
 }
 
 .card:hover {
     transform: translateY(-5px);
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
     border-color: rgba(74, 144, 226, 0.3);
-    height: auto;
 }
 
 .card-img-top {
@@ -146,82 +145,6 @@ body {
 
 .projects-section .row {
     margin-bottom: 2rem;
-}
-
-.projects-section .card {
-    background: var(--card-bg);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    transition: var(--transition);
-    height: 450px;
-    margin-bottom: 2rem;
-    overflow: hidden;
-}
-
-.projects-section .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
-    border-color: rgba(74, 144, 226, 0.3);
-    height: auto;
-    z-index: 2;
-}
-
-.projects-section .card-img-top {
-    height: 200px;
-    object-fit: cover;
-}
-
-.projects-section .card-body {
-    padding: 1.5rem;
-}
-
-.projects-section .card-title {
-    color: #fff;
-    font-weight: 600;
-    font-size: 1.25rem;
-    margin-bottom: 1rem;
-}
-
-.projects-section .card-text {
-    color: var(--text-secondary);
-    font-size: 0.95rem;
-    line-height: 1.6;
-}
-
-.projects-section .card-text strong {
-    color: #fff;
-    font-weight: 600;
-}
-
-.projects-section .card-text a {
-    color: #4a90e2;
-    text-decoration: none;
-    transition: var(--transition);
-}
-
-.projects-section .card-text a:hover {
-    color: #67b26f;
-}
-
-.projects-section ul {
-    padding-left: 1.2rem;
-    margin-top: 0.5rem;
-}
-
-.projects-section ul li {
-    color: var(--text-secondary);
-    margin-bottom: 0.5rem;
-}
-
-.projects-section .achievement-text {
-    color: var(--text-secondary);
-    margin-top: 1rem;
-}
-
-.projects-section .achievement-text strong {
-    color: #fff;
-    display: inline-block;
-    margin-bottom: 0.25rem;
 }
 
 /* Rest of the styles remain the same */
@@ -382,5 +305,421 @@ section {
 
     .card {
         height: auto;
+    }
+}
+
+/* GIF Optimization Styles for smooth playback */
+.card-img-top {
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+/* Smooth GIF rendering */
+gif-image, 
+.card-img-top[src$=".gif"] {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    -ms-interpolation-mode: bicubic;
+}
+
+/* ============================================
+   Professional Project Card Styling
+   ============================================ */
+
+/* Project Card Container */
+.project-card {
+    background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    cursor: pointer;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.project-card:hover {
+    box-shadow: 0 8px 30px rgba(74, 144, 226, 0.15);
+    border-color: rgba(74, 144, 226, 0.2);
+}
+
+/* Project Card Image */
+.project-card-image {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
+}
+
+.project-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Project Card Content */
+.project-card-content {
+    padding: 1.5rem;
+    background: #30334A;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.project-card-content.full-height {
+    min-height: 280px;
+}
+
+/* Project Title */
+.project-title {
+    color: #e9ecef;
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+}
+
+/* Project Summary */
+.project-summary {
+    color: #adb5bd;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    flex-grow: 1;
+}
+
+/* Project Highlights - Badge Style */
+.project-highlights {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: auto;
+}
+
+.highlight-badge {
+    display: inline-block;
+    padding: 0.35rem 0.75rem;
+    background: linear-gradient(135deg, #e8f4fd 0%, #d6e9f8 100%);
+    color: #2b6cb0;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border-radius: 20px;
+    border: 1px solid rgba(43, 108, 176, 0.15);
+}
+
+.highlight-badge.success {
+    background: linear-gradient(135deg, #e6f7ed 0%, #d4f0e0 100%);
+    color: #22863a;
+    border-color: rgba(34, 134, 58, 0.15);
+}
+
+/* Project List Styling */
+.project-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex-grow: 1;
+}
+
+.project-list li {
+    position: relative;
+    padding: 0.75rem 0 0.75rem 1.5rem;
+    color: #bdcede;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.project-list li:last-child {
+    border-bottom: none;
+}
+
+.project-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 6px;
+    height: 6px;
+    background: linear-gradient(135deg, #4a90e2 0%, #67b26f 100%);
+    border-radius: 50%;
+}
+
+.project-list li strong {
+    color: #e9ecef;
+    font-weight: 600;
+}
+
+/* ============================================
+   Project Modal Styling
+   ============================================ */
+
+.project-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.project-modal.active {
+    display: flex;
+}
+
+.modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(26, 31, 60, 0.85);
+    backdrop-filter: blur(4px);
+}
+
+.modal-container {
+    position: relative;
+    width: 100%;
+    max-width: 700px;
+    max-height: 90vh;
+    background: #ffffff;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.95);
+    border: none;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    line-height: 1;
+    color: #495057;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.modal-close:hover {
+    background: #ffffff;
+    color: #1a1f3c;
+}
+
+.modal-header {
+    position: relative;
+    height: 250px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
+}
+
+.modal-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.modal-body {
+    padding: 2rem;
+    overflow-y: auto;
+    max-height: calc(90vh - 250px);
+}
+
+.modal-title {
+    color: #1a1f3c;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1.25rem;
+    line-height: 1.3;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #e9ecef;
+}
+
+.modal-description {
+    color: #495057;
+    font-size: 0.95rem;
+    line-height: 1.7;
+}
+
+.modal-description p {
+    margin-bottom: 1rem;
+}
+
+.modal-description ul {
+    padding-left: 0;
+    margin: 1rem 0;
+    list-style: none;
+}
+
+.modal-description ul li {
+    position: relative;
+    padding: 0.6rem 0 0.6rem 1.75rem;
+    color: #495057;
+    line-height: 1.6;
+    border-bottom: 1px solid #f1f3f5;
+}
+
+.modal-description ul li:last-child {
+    border-bottom: none;
+}
+
+.modal-description ul li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.9rem;
+    width: 8px;
+    height: 8px;
+    background: linear-gradient(135deg, #4a90e2 0%, #67b26f 100%);
+    border-radius: 50%;
+}
+
+.modal-description ul li strong {
+    color: #1a1f3c;
+    font-weight: 600;
+}
+
+.modal-description a {
+    color: #4a90e2;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.modal-description a:hover {
+    text-decoration: underline;
+}
+
+.modal-highlight {
+    display: inline-block;
+    padding: 0.4rem 0.85rem;
+    background: linear-gradient(135deg, #e6f7ed 0%, #d4f0e0 100%);
+    color: #22863a;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-radius: 20px;
+    margin: 0.5rem 0.5rem 0.5rem 0;
+}
+
+/* ============================================
+   Responsive Styles
+   ============================================ */
+
+@media (max-width: 992px) {
+    .project-card-image {
+        height: 180px;
+    }
+    
+    .modal-header {
+        height: 200px;
+    }
+}
+
+@media (max-width: 768px) {
+    .project-card-image {
+        height: 160px;
+    }
+    
+    .project-card-content {
+        padding: 1.25rem;
+    }
+    
+    .project-title {
+        font-size: 1.05rem;
+    }
+    
+    .modal-container {
+        max-height: 85vh;
+        border-radius: 16px;
+    }
+    
+    .modal-header {
+        height: 180px;
+    }
+    
+    .modal-body {
+        padding: 1.5rem;
+        max-height: calc(85vh - 180px);
+    }
+    
+    .modal-title {
+        font-size: 1.25rem;
+    }
+    
+    .modal-close {
+        width: 36px;
+        height: 36px;
+        font-size: 1.25rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .project-card-image {
+        height: 140px;
+    }
+    
+    .project-card-content {
+        padding: 1rem;
+    }
+    
+    .project-title {
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .project-summary {
+        font-size: 0.85rem;
+        margin-bottom: 0.75rem;
+    }
+    
+    .highlight-badge {
+        font-size: 0.7rem;
+        padding: 0.25rem 0.6rem;
+    }
+    
+    .project-list li {
+        padding: 0.6rem 0 0.6rem 1.25rem;
+        font-size: 0.85rem;
+    }
+    
+    .modal-container {
+        max-height: 90vh;
+        border-radius: 12px;
+        margin: 0.5rem;
+    }
+    
+    .modal-header {
+        height: 160px;
+    }
+    
+    .modal-body {
+        padding: 1.25rem;
+        max-height: calc(90vh - 160px);
+    }
+    
+    .modal-title {
+        font-size: 1.1rem;
+        padding-bottom: 0.75rem;
+    }
+    
+    .modal-description {
+        font-size: 0.9rem;
     }
 }
