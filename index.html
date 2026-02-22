@@ -186,107 +186,129 @@
     <section id="achievements" class="achievements-section py-5">
         <div class="container">
             <h2 class="section-title text-center">Achievements</h2>
-            <div id="achievementsCarousel" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                    <!-- First Carousel Item -->
-                    <div class="carousel-item active">
-                        <div class="d-flex justify-content-center">
-                            <div class="card mx-2" style="width: 18rem;">
-                                <img src="https://via.placeholder.com/300" class="card-img-top" alt="Achievement Image">
-                                <div class="card-body">
-                                    <h5 class="card-title">Intra IUB Techfest (Spring23) Award for best Database Project: Student Performance Management System</h5>
-                                    <p class="card-text">Developed Student Performance Monitoring System (SPMS 4.0)" as part of Team <strong> Failure DataBees </strong>. This project aimed to enhance an outcome-based education framework by analyzing student performance through various metrics like quizzes, exams, and course outcomes. We developed a relational database system that allowed for seamless data input, storage, and retrieval, enabling stakeholders to access statistical reports on student and faculty performance. Additionally, the system featured role-based dashboards, backlog record management, and web application.</p>
-                                </div>
-                            </div>
-                            <div class="card mx-2" style="width: 18rem;">
-                                <img src="assets/image/cansatT.jpg" class="card-img-top" alt="Achievement Image">
-                                <div class="card-body">
-                                    <h5 class="card-title">AAS CanSat Competition</h5>
-                                    <p class="card-text">First-ever finalist from Bangladesh in 2023, Top 8 in Asia in 2024 with Team IUB FabSat.</p>
-                                </div>
-                            </div>
-                            <div class="card mx-2" style="width: 18rem;">
-                                <img src="assets/image/jatrabondhu.jpeg" class="card-img-top" alt="Achievement Image">
-                                <div class="card-body">
-                                    <h5 class="card-title">Intra IUB Techfest (Spring24) Award for best project showcase: "যাত্রাবন্ধু" Smart Shuttle System</h5>
-                                    <p class="card-text">A GPS-enabled Smart Shuttle Management System. Also awarded Vice Chancellor's Startup Fund in 2024.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Second Carousel Item -->
-                    <div class="carousel-item">
-                        <div class="d-flex justify-content-center">
-                            <div class="card mx-2" style="width: 18rem;">
-                                <img src="assets/image/ICASERT2019.jpg" class="card-img-top" alt="Achievement Image">
-                                <div class="card-body">
-                                    <h5 class="card-title">ICASERT Robo Fest 2019</h5>
-                                    <p class="card-text">First Runners-up in the 1st International Conference on Advances in Science, Engineering and Robotics Technology, Robo-Race segment.</p>
-                                </div>
-                            </div>
-                            <div class="card mx-2" style="width: 18rem;">
-                                <img src="https://via.placeholder.com/300" class="card-img-top" alt="Achievement Image">
-                                <div class="card-body">
-                                    <h5 class="card-title">National Cansat Competition 2019: Second Runner's up</h5>
-                                    <p class="card-text"></p>
-                                </div>
-                            </div>
-                            <div class="card mx-2" style="width: 18rem;">
-                                <img src="https://via.placeholder.com/300" class="card-img-top" alt="Achievement Image">
-                                <div class="card-body">
-                                    <h5 class="card-title">Drone Competition</h5>
-                                    <p class="card-text">Achieved Runner-Up in Quadcopter Race at national-level competitions.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Third Carousel Item -->
-                    <div class="carousel-item">
-                        <div class="d-flex justify-content-center">
-                            <div class="card mx-2" style="width: 18rem;">
-                                <img src="https://via.placeholder.com/300" class="card-img-top" alt="Achievement Image">
-                                <div class="card-body">
-                                    <h5 class="card-title">Soccerbot</h5>
-                                    <p class="card-text">Won awards in Soccerbot competitions across multiple tech fests.</p>
-                                </div>
-                            </div>
-                            <div class="card mx-2" style="width: 18rem;">
-                                <img src="https://via.placeholder.com/300" class="card-img-top" alt="Achievement Image">
-                                <div class="card-body">
-                                    <h5 class="card-title">Line-Following Robot (LFR)</h5>
-                                    <p class="card-text">Top performer in PID-based line-following robot challenges.</p>
-                                </div>
-                            </div>
-                            <div class="card mx-2" style="width: 18rem;">
-                                <img src="https://via.placeholder.com/300" class="card-img-top" alt="Achievement Image">
-                                <div class="card-body">
-                                    <h5 class="card-title">RC Car & Robo Soccer</h5>
-                                    <p class="card-text">Secured Runner-Up positions in Robo Race and GearUp segments.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Fourth Carousel Item -->
-                    <div class="carousel-item">
-                        <div class="d-flex justify-content-center">
-                            <div class="card mx-2" style="width: 18rem;">
-                                <img src="assets/image/techfestIIT.jpg" class="card-img-top" alt="Achievement Image">
-                                <div class="card-body">
-                                    <h5 class="card-title">IIT Bombay Techfest 2022</h5>
-                                    <p class="card-text">Achieved Top 7 in Rowbotics Segment and Top 10 in Cozmo Clench Segment at Indian Institute of Technology Bombay representing Bangladesh in world for the very first time in my life!</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Carousel Controls -->
-                <button class="carousel-control-prev" type="button" data-bs-target="#achievementsCarousel" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
+            
+            <!-- Infinite Carousel -->
+            <div class="achievements-carousel-wrapper">
+                <button class="carousel-nav-btn carousel-nav-prev" aria-label="Previous">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
                 </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#achievementsCarousel" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
+                <div class="achievements-carousel-container">
+                    <div class="achievements-carousel" id="achievementsCarousel">
+                    <!-- Achievement Card 1 -->
+                    <article class="achievement-card">
+                        <div class="achievement-card-image">
+                            <img src="assets/image/VC_award.png" alt="Best Database Project Award" loading="lazy">
+                        </div>
+                        <div class="achievement-card-content">
+                            <h5 class="achievement-title">Best Database Project</h5>
+                            <p class="achievement-subtitle">Intra IUB Techfest Spring 2023</p>
+                            <p class="achievement-description">Developed Student Performance Monitoring System (SPMS 4.0) as part of Team Failure DataBees. A relational database system with role-based dashboards and backlog management.</p>
+                        </div>
+                    </article>
+                    
+                    <!-- Achievement Card 2 -->
+                    <article class="achievement-card">
+                        <div class="achievement-card-image">
+                            <img src="assets/image/cansatT.jpg" alt="AAS CanSat Competition" loading="lazy">
+                        </div>
+                        <div class="achievement-card-content">
+                            <h5 class="achievement-title">AAS CanSat Competition</h5>
+                            <p class="achievement-subtitle">International Finalist</p>
+                            <p class="achievement-description">First-ever finalist from Bangladesh in 2023. Achieved Top 8 in Asia in 2024 with Team IUB FabSat.</p>
+                        </div>
+                    </article>
+                    
+                    <!-- Achievement Card 3 -->
+                    <article class="achievement-card">
+                        <div class="achievement-card-image">
+                            <img src="assets/image/jatrabondhu.jpeg" alt="Smart Shuttle System Award" loading="lazy">
+                        </div>
+                        <div class="achievement-card-content">
+                            <h5 class="achievement-title">Best Project Showcase</h5>
+                            <p class="achievement-subtitle">Intra IUB Techfest Spring 2024</p>
+                            <p class="achievement-description">GPS-enabled Smart Shuttle Management System "যাত্রাবন্ধু". Also awarded Vice Chancellor's Startup Fund in 2024.</p>
+                        </div>
+                    </article>
+                    
+                    <!-- Achievement Card 4 -->
+                    <article class="achievement-card">
+                        <div class="achievement-card-image">
+                            <img src="assets/image/ICASERT2019.jpg" alt="ICASERT Robo Fest 2019" loading="lazy">
+                        </div>
+                        <div class="achievement-card-content">
+                            <h5 class="achievement-title">ICASERT Robo Fest 2019</h5>
+                            <p class="achievement-subtitle">First Runners-up</p>
+                            <p class="achievement-description">1st International Conference on Advances in Science, Engineering and Robotics Technology, Robo-Race segment.</p>
+                        </div>
+                    </article>
+                    
+                    <!-- Achievement Card 5 -->
+                    <article class="achievement-card">
+                        <div class="achievement-card-image">
+                            <img src="assets/image/image.jpg" alt="National CanSat Competition" loading="lazy">
+                        </div>
+                        <div class="achievement-card-content">
+                            <h5 class="achievement-title">National CanSat Competition</h5>
+                            <p class="achievement-subtitle">Second Runner's Up - 2019</p>
+                            <p class="achievement-description">Achieved second runner-up position in the National CanSat Competition 2019.</p>
+                        </div>
+                    </article>
+                    
+                    <!-- Achievement Card 6 -->
+                    <article class="achievement-card">
+                        <div class="achievement-card-image">
+                            <img src="assets/image/bestproject.png" alt="Drone Competition" loading="lazy">
+                        </div>
+                        <div class="achievement-card-content">
+                            <h5 class="achievement-title">Drone Competition</h5>
+                            <p class="achievement-subtitle">Runner-Up</p>
+                            <p class="achievement-description">Achieved Runner-Up in Quadcopter Race at national-level competitions.</p>
+                        </div>
+                    </article>
+                    
+                    <!-- Achievement Card 7 -->
+                    <article class="achievement-card">
+                        <div class="achievement-card-image">
+                            <img src="assets/image/techfestIIT.jpg" alt="IIT Bombay Techfest" loading="lazy">
+                        </div>
+                        <div class="achievement-card-content">
+                            <h5 class="achievement-title">IIT Bombay Techfest 2022</h5>
+                            <p class="achievement-subtitle">International Representative</p>
+                            <p class="achievement-description">Top 7 in Rowbotics Segment and Top 10 in Cozmo Clench Segment. First time representing Bangladesh at IIT Bombay.</p>
+                        </div>
+                    </article>
+                    
+                    <!-- Achievement Card 8 -->
+                    <article class="achievement-card">
+                        <div class="achievement-card-image">
+                            <img src="assets/image/bighall.jpg" alt="Soccerbot Competition" loading="lazy">
+                        </div>
+                        <div class="achievement-card-content">
+                            <h5 class="achievement-title">Soccerbot</h5>
+                            <p class="achievement-subtitle">Multiple Awards</p>
+                            <p class="achievement-description">Won awards in Soccerbot competitions across multiple tech fests.</p>
+                        </div>
+                    </article>
+                    
+                    <!-- Achievement Card 9 -->
+                    <article class="achievement-card">
+                        <div class="achievement-card-image">
+                            <img src="assets/image/RAS.gif" alt="Line Following Robot" loading="lazy">
+                        </div>
+                        <div class="achievement-card-content">
+                            <h5 class="achievement-title">Line-Following Robot</h5>
+                            <p class="achievement-subtitle">Top Performer</p>
+                            <p class="achievement-description">Top performer in PID-based line-following robot challenges.</p>
+                        </div>
+                    </article>
+                </div>
+                </div>
+                <button class="carousel-nav-btn carousel-nav-next" aria-label="Next">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
                 </button>
             </div>
         </div>
