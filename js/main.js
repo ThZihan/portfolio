@@ -202,3 +202,149 @@ document.addEventListener('keydown', (e) => {
 document.querySelector('.modal-container').addEventListener('click', (e) => {
     e.stopPropagation();
 });
+
+/**
+ * Achievements Infinite Carousel
+ * Auto-sliding carousel with navigation buttons
+ */
+(function() {
+    const carousel = document.getElementById('achievementsCarousel');
+    const prevBtn = document.querySelector('.carousel-nav-prev');
+    const nextBtn = document.querySelector('.carousel-nav-next');
+    const wrapper = document.querySelector('.achievements-carousel-wrapper');
+    
+    if (!carousel || !prevBtn || !nextBtn) return;
+    
+    const cards = carousel.querySelectorAll('.achievement-card');
+    if (cards.length === 0) return;
+    
+    // Configuration
+    const AUTO_SLIDE_INTERVAL = 3000; // 3 seconds
+    const PAUSE_ON_HOVER = true;
+    
+    let autoSlideTimer = null;
+    let isPaused = false;
+    
+    // Get card width including gap
+    function getCardWidth() {
+        const card = cards[0];
+        const style = getComputedStyle(carousel);
+        const gap = parseFloat(style.gap) || 0;
+        return card.offsetWidth + gap;
+    }
+    
+    // Scroll by one card with smooth animation
+    function scrollByCard(direction) {
+        const cardWidth = getCardWidth();
+        const maxScroll = carousel.scrollWidth - carousel.clientWidth;
+        const currentScroll = carousel.scrollLeft;
+        
+        // Check if we need to loop
+        if (direction > 0 && currentScroll >= maxScroll - 5) {
+            // At the end, jump to start
+            carousel.scrollTo({ left: 0, behavior: 'auto' });
+        } else if (direction < 0 && currentScroll <= 5) {
+            // At the start, jump to end
+            carousel.scrollTo({ left: maxScroll, behavior: 'auto' });
+        } else {
+            carousel.scrollBy({
+                left: cardWidth * direction,
+                behavior: 'smooth'
+            });
+        }
+    }
+    
+    // Auto-slide function
+    function startAutoSlide() {
+        if (autoSlideTimer) clearInterval(autoSlideTimer);
+        autoSlideTimer = setInterval(() => {
+            if (!isPaused) {
+                scrollByCard(1);
+            }
+        }, AUTO_SLIDE_INTERVAL);
+    }
+    
+    function stopAutoSlide() {
+        if (autoSlideTimer) {
+            clearInterval(autoSlideTimer);
+            autoSlideTimer = null;
+        }
+    }
+    
+    function pauseAutoSlide() {
+        isPaused = true;
+    }
+    
+    function resumeAutoSlide() {
+        isPaused = false;
+    }
+    
+    // Event listeners for navigation buttons
+    prevBtn.addEventListener('click', () => {
+        scrollByCard(-1);
+        // Reset timer on manual navigation
+        stopAutoSlide();
+        startAutoSlide();
+    });
+    
+    nextBtn.addEventListener('click', () => {
+        scrollByCard(1);
+        // Reset timer on manual navigation
+        stopAutoSlide();
+        startAutoSlide();
+    });
+    
+    // Pause on hover
+    if (PAUSE_ON_HOVER && wrapper) {
+        wrapper.addEventListener('mouseenter', pauseAutoSlide);
+        wrapper.addEventListener('mouseleave', resumeAutoSlide);
+        wrapper.addEventListener('touchstart', pauseAutoSlide, { passive: true });
+        wrapper.addEventListener('touchend', resumeAutoSlide, { passive: true });
+    }
+    
+    // Touch/swipe support for mobile
+    let touchStartX = 0;
+    let touchEndX = 0;
+    
+    carousel.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+        pauseAutoSlide();
+    }, { passive: true });
+    
+    carousel.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        const diff = touchStartX - touchEndX;
+        
+        // Swipe threshold
+        if (Math.abs(diff) > 50) {
+            scrollByCard(diff > 0 ? 1 : -1);
+        }
+        resumeAutoSlide();
+    }, { passive: true });
+    
+    // Keyboard navigation
+    carousel.setAttribute('tabindex', '0');
+    carousel.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') {
+            scrollByCard(-1);
+            stopAutoSlide();
+            startAutoSlide();
+        } else if (e.key === 'ArrowRight') {
+            scrollByCard(1);
+            stopAutoSlide();
+            startAutoSlide();
+        }
+    });
+    
+    // Start auto-slide on page load
+    startAutoSlide();
+    
+    // Pause when page is not visible
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            pauseAutoSlide();
+        } else {
+            resumeAutoSlide();
+        }
+    });
+})();
